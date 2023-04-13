@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build --webpack",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "keygen": "npx ts-node scripts/keygen.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -16,14 +17,20 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:start": "docker-compose -f docker/docker-compose.yml -p dsa up -d --remove-orphans",
+    "docker:stop": "docker-compose -f docker/docker-compose.yml -p dsa stop",
+    "docker:clean": "docker-compose -f docker/docker-compose.yml -p dsa down --volumes"
   },
   "dependencies": {
     "@nestjs/common": "9.4.0",
     "@nestjs/core": "9.4.0",
     "@nestjs/microservices": "9.4.0",
     "@nestjs/platform-fastify": "9.4.0",
+    "fastest-validator": "1.16.0",
+    "lodash": "4.17.21",
     "nats": "2.13.1",
+    "nkeys.js": "1.0.5",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.0"
   },
@@ -32,6 +39,7 @@
     "@nestjs/schematics": "9.1.0",
     "@nestjs/testing": "9.4.0",
     "@types/jest": "29.5.0",
+    "@types/lodash": "4.14.192",
     "@types/node": "18.15.11",
     "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.57.1",
@@ -67,7 +75,12 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@dsa/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@dsa/validator(|/.*)$": "<rootDir>/libs/validator/src/$1"
+    }
   }
 }

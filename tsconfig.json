@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@dsa/common": [
+        "libs/common/src"
+      ],
+      "@dsa/common/*": [
+        "libs/common/src/*"
+      ]
+    }
   }
 }
