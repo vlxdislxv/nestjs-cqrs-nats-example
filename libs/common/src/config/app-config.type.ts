@@ -1,15 +1,15 @@
 export type AppConfig = {
-  http?: {
+  http: {
     host: string;
     port: number;
   };
 
-  nats?: {
+  nats: {
     servers: string[];
     secret: string;
   };
 
-  postgres?: {
+  postgres: {
     db: string;
     host: string;
     port: number;

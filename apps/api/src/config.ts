@@ -1,10 +1,10 @@
 import { AppConfig, loadConfig } from '@dsa/common';
 
-let cfg: Pick<Required<AppConfig>, 'http' | 'nats'>;
+let cfg: Pick<AppConfig, 'http' | 'nats'>;
 
 export function config() {
   if (!cfg) {
-    cfg = loadConfig({
+    cfg = loadConfig(['http', 'nats'], {
       http: {
         port: parseInt(process.env.HTTP_PORT || '3000'),
       },

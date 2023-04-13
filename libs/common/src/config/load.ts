@@ -1,4 +1,5 @@
-import { merge } from 'lodash';
+import { merge, pick } from 'lodash';
+import { AppConfig } from './app-config.type';
 
 const defaults = {
   http: {
@@ -15,6 +16,9 @@ const defaults = {
   },
 };
 
-export function loadConfig<V>(trValues: V) {
-  return merge(defaults, trValues);
+export function loadConfig<T extends keyof AppConfig, V>(
+  fields: T[],
+  values: V,
+) {
+  return merge(pick(defaults, fields), values);
 }
