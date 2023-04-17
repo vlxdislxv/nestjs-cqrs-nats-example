@@ -1,3 +1,5 @@
-# Run migrations for multiple services.
+# Run migrations for all services.
 
-yarn knex:migrate:latest data-structure
+for i in $(find apps/*/knexfile.ts); do
+  yarn knex migrate:latest --knexfile $i --env main
+done

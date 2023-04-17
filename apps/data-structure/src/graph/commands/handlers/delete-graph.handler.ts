@@ -1,3 +1,4 @@
+import { NotFoundRpcException } from '@dsa/nats';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { GraphCQ } from '../../base';
 import { DeleteGraphCommand } from '../impl';
@@ -8,7 +9,8 @@ export class DeleteGraphHandler
   implements ICommandHandler<DeleteGraphCommand>
 {
   public async execute(command: DeleteGraphCommand) {
-    await this.repo.delete(command.id);
+    const raws = await this.repo.delete(command.id);
+    if (!raws) throw new NotFoundRpcException();
     return true;
   }
 }

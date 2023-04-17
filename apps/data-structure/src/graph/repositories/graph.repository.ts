@@ -58,7 +58,7 @@ export class GraphRepository extends KnexRepository {
       .transacting(tx);
   }
 
-  public delete(id: string): Promise<boolean> {
+  public delete(id: string): Promise<number> {
     return this.query().where({ id }).del();
   }
 }

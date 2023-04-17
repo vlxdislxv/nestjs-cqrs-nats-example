@@ -11,11 +11,18 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   CreateGraphDto,
   EdgeDto,
@@ -72,9 +79,10 @@ export class GraphController {
   }
 
   @Delete(':id')
-  @ApiOkResponse()
-  public delete(@Param('id', ParseULIDPipe) id: string) {
-    return this.service.delete(id);
+  @ApiNoContentResponse()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param('id', ParseULIDPipe) id: string) {
+    await this.service.delete(id);
   }
 
   @Post(':id/vertices')
