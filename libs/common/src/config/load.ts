@@ -1,7 +1,8 @@
 import { merge, pick } from 'lodash';
-import { AppConfig } from './app-config.type';
+import { AppConfig, CQServiceType } from './types';
 
 const defaults = {
+  cqstype: (process.env.CQSTYPE || 'BOTH') as CQServiceType,
   http: {
     host: process.env.HTTP_HOST || '0.0.0.0',
   },

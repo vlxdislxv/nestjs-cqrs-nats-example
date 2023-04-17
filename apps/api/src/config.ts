@@ -1,8 +1,10 @@
 import { AppConfig, loadConfig } from '@dsa/common';
 
-let cfg: Pick<AppConfig, 'http' | 'nats'>;
+let cfg: Pick<AppConfig, 'http' | 'nats'> & {
+  swagger: boolean;
+};
 
-export function config() {
+export function appConfig() {
   if (!cfg) {
     cfg = loadConfig(['http', 'nats'], {
       http: {
@@ -11,8 +13,9 @@ export function config() {
       nats: {
         secret:
           process.env.NATS_SECRET ||
-          'SUALLFSY6BS6VPGDLMS343GMNE73SHIOUK23XVZOZUTDZV5ZQP7ENXQQBY',
+          'SUALY5RH4CR5AEZS62M57XN7AQYNT63XG6NL4ORI7JNY7HWCESDSWW3QSA',
       },
+      swagger: process.env.SWAGGER_ENABLED !== '0' ?? true,
     });
   }
 

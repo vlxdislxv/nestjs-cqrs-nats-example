@@ -1,15 +1,21 @@
+import { RpcExceptionFilter } from '@dsa/nats';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
+import { nkeyAuthenticator } from 'nats';
 import { AppModule } from './app.module';
+import { appConfig } from './config';
 
 async function bootstrap() {
+  const { nats } = appConfig();
+
   const app = await NestFactory.createMicroservice(AppModule, {
     transport: Transport.NATS,
     options: {
-      servers: ['nats://localhost:4222'],
+      servers: nats.servers,
+      authenticator: nkeyAuthenticator(new TextEncoder().encode(nats.secret)),
     },
   });
 
-  await app.listen();
+  await app.useGlobalFilters(new RpcExceptionFilter()).listen();
 }
 bootstrap();

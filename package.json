@@ -4,15 +4,20 @@
   "description": "NestJS CQRS + NATS microservice example.",
   "author": "vlxdislxv",
   "private": false,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build --webpack",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "keygen": "npx ts-node scripts/keygen.ts",
+    "keygen": "npx ts-node scripts/nats/keygen.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/$APP/main",
+    "knex:migrate:make": "sh scripts/knex/migrate-make.sh",
+    "knex:migrate:up": "sh scripts/knex/migrate-up.sh",
+    "knex:migrate:down": "sh scripts/knex/migrate-down.sh",
+    "knex:migrate:latest": "sh scripts/knex/migrate-latest.sh",
+    "knex:migrate:latest:all": "sh scripts/knex/migrate-all-latest.sh",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -23,16 +28,22 @@
     "docker:clean": "docker-compose -f docker/docker-compose.yml -p dsa down --volumes"
   },
   "dependencies": {
+    "@fastify/static": "6.10.1",
     "@nestjs/common": "9.4.0",
     "@nestjs/core": "9.4.0",
+    "@nestjs/cqrs": "9.0.3",
     "@nestjs/microservices": "9.4.0",
     "@nestjs/platform-fastify": "9.4.0",
+    "@nestjs/swagger": "6.3.0",
     "fastest-validator": "1.16.0",
+    "knex": "2.4.2",
     "lodash": "4.17.21",
     "nats": "2.13.1",
     "nkeys.js": "1.0.5",
+    "pg": "8.10.0",
     "reflect-metadata": "0.1.13",
-    "rxjs": "7.8.0"
+    "rxjs": "7.8.0",
+    "ulid": "2.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "9.3.0",
@@ -80,7 +91,9 @@
     ],
     "moduleNameMapper": {
       "^@dsa/common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^@dsa/validator(|/.*)$": "<rootDir>/libs/validator/src/$1"
+      "^@dsa/validator(|/.*)$": "<rootDir>/libs/validator/src/$1",
+      "^@dsa/nats(|/.*)$": "<rootDir>/libs/nats/src/$1",
+      "^@dsa/knex(|/.*)$": "<rootDir>/libs/knex/src/$1"
     }
   }
 }

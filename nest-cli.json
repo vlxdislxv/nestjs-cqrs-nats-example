@@ -29,6 +29,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
+    },
+    "nats": {
+      "type": "library",
+      "root": "libs/nats",
+      "entryFile": "index",
+      "sourceRoot": "libs/nats/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/nats/tsconfig.lib.json"
+      }
+    },
+    "knex": {
+      "type": "library",
+      "root": "libs/knex",
+      "entryFile": "index",
+      "sourceRoot": "libs/knex/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/knex/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

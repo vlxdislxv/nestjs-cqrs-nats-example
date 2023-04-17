@@ -17,12 +17,25 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
     "paths": {
       "@dsa/common": [
         "libs/common/src"
       ],
       "@dsa/common/*": [
         "libs/common/src/*"
+      ],
+      "@dsa/nats": [
+        "libs/nats/src"
+      ],
+      "@dsa/nats/*": [
+        "libs/nats/src/*"
+      ],
+      "@dsa/knex": [
+        "libs/knex/src"
+      ],
+      "@dsa/knex/*": [
+        "libs/knex/src/*"
       ]
     }
   }

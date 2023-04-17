@@ -1,2 +1,2 @@
-export * from './app-config.type';
 export * from './load';
+export * from './types';
