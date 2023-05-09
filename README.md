@@ -20,5 +20,5 @@ $ yarn start:dev data-structure # start data-structure service.
 http://localhost:3000/api - Swagger (Turned On by Default).
 
 ```bash
-$ yarn test:watch # run tests.
+$ yarn test # run tests.
 ```
