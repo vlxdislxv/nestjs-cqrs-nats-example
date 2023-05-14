@@ -1,13 +1,9 @@
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  Injectable,
-  PipeTransform,
-} from '@nestjs/common';
+import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
+import { ValidationError } from 'fastest-validator';
 import { CheckFunction, isFailed } from '../validator';
 
 @Injectable()
-export class ValidationPipe implements PipeTransform<any> {
+export abstract class ValidationPipe implements PipeTransform<any> {
   public constructor(private readonly check: CheckFunction) {}
 
   public async transform(value: any, { type }: ArgumentMetadata) {
@@ -15,9 +11,11 @@ export class ValidationPipe implements PipeTransform<any> {
 
     const result = await this.check(value);
     if (isFailed(result)) {
-      throw new BadRequestException(result);
+      this.fail(result);
     }
 
     return value;
   }
+
+  protected abstract fail(err: ValidationError[]): void;
 }

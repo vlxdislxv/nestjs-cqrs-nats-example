@@ -1,19 +1,19 @@
 import { SetMetadata, UsePipes, applyDecorators } from '@nestjs/common';
 import { RESPONSE_SCHEMA_KEY } from '../interceptors';
-import { ValidationPipe } from '../pipes';
+import { HttpValidationPipe } from '../pipes';
 import { CheckFunction } from '../validator';
 
-export function Schema(request: CheckFunction, response: CheckFunction) {
+export function HttpSchema(request: CheckFunction, response: CheckFunction) {
   return applyDecorators(
-    UsePipes(new ValidationPipe(request)),
+    UsePipes(new HttpValidationPipe(request)),
     SetMetadata(RESPONSE_SCHEMA_KEY, response),
   );
 }
 
-export function RequestSchema(request: CheckFunction) {
-  return applyDecorators(UsePipes(new ValidationPipe(request)));
+export function HttpRequestSchema(request: CheckFunction) {
+  return applyDecorators(UsePipes(new HttpValidationPipe(request)));
 }
 
-export function ResponseSchema(response: CheckFunction) {
+export function HttpResponseSchema(response: CheckFunction) {
   return applyDecorators(SetMetadata(RESPONSE_SCHEMA_KEY, response));
 }

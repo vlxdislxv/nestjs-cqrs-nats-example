@@ -81,9 +81,9 @@ describe('data-structure service (e2e)', () => {
       .catch((err) => err);
 
     expect(notFound.getError()).toEqual({
-      type: 'BadRequestRpcException',
       statusCode: 404,
-      message: 'Not Found.',
+      message: 'Entity not Found.',
+      error: 'Not Found',
     });
   });
 

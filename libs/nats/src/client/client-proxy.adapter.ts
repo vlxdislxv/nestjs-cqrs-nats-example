@@ -11,11 +11,12 @@ export class ClientProxyAdapter {
     try {
       return await firstValueFrom(this.client.send(topic, data));
     } catch (err) {
-      if (err.type === 'BadRequestRpcException') {
+      const scode = err['statusCode'];
+      if (scode >= 400 && scode < 500) {
         throw new RpcException(err);
       }
 
-      err.message += `|RpcTopic:${topic}`;
+      err.message += ` | RpcTopic:${topic}`;
 
       throw err;
     }

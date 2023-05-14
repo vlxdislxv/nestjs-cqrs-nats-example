@@ -1,8 +1,10 @@
-import { ParseULIDPipe, ResponseSchema, Schema } from '@dsa/common';
+import { ParseULIDPipe } from '@dsa/common';
 import {
   CommandMessagePattern,
   ExecutionResultSchema,
   QueryMessagePattern,
+  RpcResponseSchema,
+  RpcSchema,
 } from '@dsa/nats';
 import {
   CreateGraphDto,
@@ -45,19 +47,19 @@ export class GraphController {
   ) {}
 
   @QueryMessagePattern(DsGraphRpcTopic.GET_ALL, cqstype)
-  @ResponseSchema(GraphDtoArraySchema)
+  @RpcResponseSchema(GraphDtoArraySchema)
   public getAll() {
     return this.queryBus.execute(new GetAllGraphsQuery());
   }
 
   @QueryMessagePattern(DsGraphRpcTopic.GET_ONE, cqstype)
-  @ResponseSchema(GraphDtoSchema)
+  @RpcResponseSchema(GraphDtoSchema)
   public getOne(@Payload(ParseULIDPipe) id: string) {
     return this.queryBus.execute(new GetOneGraphQuery(id));
   }
 
   @QueryMessagePattern(DsGraphRpcTopic.BFS, cqstype)
-  @Schema(EdgeDtoSchema, SearchResultDtoSchema)
+  @RpcSchema(EdgeDtoSchema, SearchResultDtoSchema)
   public bfs(@Payload() dto: EdgeDto) {
     return this.queryBus.execute(
       new BfsGraphQuery(dto.graphId, dto.source, dto.destination),
@@ -65,7 +67,7 @@ export class GraphController {
   }
 
   @QueryMessagePattern(DsGraphRpcTopic.DFS, cqstype)
-  @Schema(EdgeDtoSchema, SearchResultDtoSchema)
+  @RpcSchema(EdgeDtoSchema, SearchResultDtoSchema)
   public dfs(@Payload() dto: EdgeDto) {
     return this.queryBus.execute(
       new DfsGraphQuery(dto.graphId, dto.source, dto.destination),
@@ -73,19 +75,19 @@ export class GraphController {
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.CREATE, cqstype)
-  @Schema(CreateGraphDtoSchema, GraphDtoSchema)
+  @RpcSchema(CreateGraphDtoSchema, GraphDtoSchema)
   public create(@Payload() dto: CreateGraphDto) {
     return this.commandBus.execute(new CreateGraphCommand(dto.nodes));
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.DELETE, cqstype)
-  @ResponseSchema(ExecutionResultSchema)
+  @RpcResponseSchema(ExecutionResultSchema)
   public delete(@Payload(ParseULIDPipe) id: string) {
     return this.commandBus.execute(new DeleteGraphCommand(id));
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.ADD_VERTEX, cqstype)
-  @Schema(VertexDtoSchema, GraphDtoSchema)
+  @RpcSchema(VertexDtoSchema, GraphDtoSchema)
   public addVertex(@Payload() dto: VertexDto) {
     return this.commandBus.execute(
       new AddVertexCommand(dto.graphId, dto.value),
@@ -93,7 +95,7 @@ export class GraphController {
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.ADD_EDGE, cqstype)
-  @Schema(EdgeDtoSchema, GraphDtoSchema)
+  @RpcSchema(EdgeDtoSchema, GraphDtoSchema)
   public addEdge(@Payload() dto: EdgeDto) {
     return this.commandBus.execute(
       new AddEdgeCommand(dto.graphId, dto.source, dto.destination),
@@ -101,7 +103,7 @@ export class GraphController {
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.DELETE_VERTEX, cqstype)
-  @Schema(VertexDtoSchema, GraphDtoSchema)
+  @RpcSchema(VertexDtoSchema, GraphDtoSchema)
   public deleteVertex(@Payload() dto: VertexDto) {
     return this.commandBus.execute(
       new DeleteVertexCommand(dto.graphId, dto.value),
@@ -109,7 +111,7 @@ export class GraphController {
   }
 
   @CommandMessagePattern(DsGraphRpcTopic.DELETE_EDGE, cqstype)
-  @Schema(EdgeDtoSchema, GraphDtoSchema)
+  @RpcSchema(EdgeDtoSchema, GraphDtoSchema)
   public deleteEdge(@Payload() dto: EdgeDto) {
     return this.commandBus.execute(
       new DeleteEdgeCommand(dto.graphId, dto.source, dto.destination),

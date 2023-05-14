@@ -4,11 +4,12 @@ import { RpcException } from '@nestjs/microservices';
 @Catch(RpcException)
 export class RpcExceptionFilter {
   public catch(exception: RpcException, host: ArgumentsHost) {
+    const error = exception.getError();
+
     if (host.getType() === 'http') {
-      const error = exception.getError();
-      throw new HttpException(error['message'], error['statusCode']);
+      throw new HttpException(error, error['statusCode']);
     }
 
-    throw exception.getError();
+    throw error;
   }
 }

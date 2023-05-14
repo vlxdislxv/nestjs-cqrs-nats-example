@@ -1,4 +1,4 @@
-import { ParseULIDPipe, ResponseSchema, Schema } from '@dsa/common';
+import { HttpResponseSchema, HttpSchema, ParseULIDPipe } from '@dsa/common';
 import { GraphClientService } from '@dsa/nats/services/graph';
 import {
   CreateGraphDtoSchema,
@@ -39,21 +39,21 @@ export class GraphController {
 
   @Get()
   @ApiOkResponse({ type: [GraphDto] })
-  @ResponseSchema(GraphDtoArraySchema)
+  @HttpResponseSchema(GraphDtoArraySchema)
   public getAll() {
     return this.service.getAll();
   }
 
   @Get(':id')
   @ApiOkResponse({ type: GraphDto })
-  @ResponseSchema(GraphDtoSchema)
+  @HttpResponseSchema(GraphDtoSchema)
   public getOne(@Param('id', ParseULIDPipe) id: string) {
     return this.service.getOne(id);
   }
 
   @Get(':id/bfs')
   @ApiOkResponse({ type: SearchResultDto })
-  @Schema(EdgeDtoSchema, SearchResultDtoSchema)
+  @HttpSchema(EdgeDtoSchema, SearchResultDtoSchema)
   public bfs(@Param('id', ParseULIDPipe) id: string, @Query() query: EdgeDto) {
     return this.service.bfs({
       ...query,
@@ -63,7 +63,7 @@ export class GraphController {
 
   @Get(':id/dfs')
   @ApiOkResponse({ type: SearchResultDto })
-  @Schema(EdgeDtoSchema, SearchResultDtoSchema)
+  @HttpSchema(EdgeDtoSchema, SearchResultDtoSchema)
   public dfs(@Param('id', ParseULIDPipe) id: string, @Query() query: EdgeDto) {
     return this.service.dfs({
       ...query,
@@ -73,7 +73,7 @@ export class GraphController {
 
   @Post()
   @ApiCreatedResponse({ type: GraphDto })
-  @Schema(CreateGraphDtoSchema, GraphDtoSchema)
+  @HttpSchema(CreateGraphDtoSchema, GraphDtoSchema)
   public create(@Body() dto: CreateGraphDto) {
     return this.service.create(dto);
   }
@@ -87,7 +87,7 @@ export class GraphController {
 
   @Post(':id/vertices')
   @ApiCreatedResponse({ type: GraphDto })
-  @Schema(VertexDtoSchema, GraphDtoSchema)
+  @HttpSchema(VertexDtoSchema, GraphDtoSchema)
   public addVertex(
     @Param('id', ParseULIDPipe) id: string,
     @Body() dto: VertexDto,
@@ -100,7 +100,7 @@ export class GraphController {
 
   @Post(':id/edges')
   @ApiCreatedResponse({ type: GraphDto })
-  @Schema(EdgeDtoSchema, GraphDtoSchema)
+  @HttpSchema(EdgeDtoSchema, GraphDtoSchema)
   public addEdge(@Param('id', ParseULIDPipe) id: string, @Body() dto: EdgeDto) {
     return this.service.addEdge({
       ...dto,
@@ -110,7 +110,7 @@ export class GraphController {
 
   @Delete(':id/vertices')
   @ApiCreatedResponse({ type: GraphDto })
-  @Schema(VertexDtoSchema, GraphDtoSchema)
+  @HttpSchema(VertexDtoSchema, GraphDtoSchema)
   public deleteVertex(
     @Param('id', ParseULIDPipe) id: string,
     @Body() dto: VertexDto,
@@ -123,7 +123,7 @@ export class GraphController {
 
   @Delete(':id/edges')
   @ApiOkResponse({ type: GraphDto })
-  @Schema(EdgeDtoSchema, GraphDtoSchema)
+  @HttpSchema(EdgeDtoSchema, GraphDtoSchema)
   public deleteEdge(
     @Param('id', ParseULIDPipe) id: string,
     @Body() dto: EdgeDto,
