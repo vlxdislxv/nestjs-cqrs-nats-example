@@ -3,9 +3,9 @@ import {
   NotAcceptableException,
   PipeTransform,
 } from '@nestjs/common';
-import { fv } from '../validator';
+import { FvCompileSync } from '../validator';
 
-const check = fv.compile({
+const check = FvCompileSync({
   $$root: true,
   type: 'string',
   alphanum: true,

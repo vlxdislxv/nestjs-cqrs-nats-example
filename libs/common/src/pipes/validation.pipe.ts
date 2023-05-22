@@ -1,16 +1,16 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { ValidationError } from 'fastest-validator';
-import { CheckFunction, isFailed } from '../validator';
+import type { SyncCheckFunction, ValidationError } from 'fastest-validator';
 
 @Injectable()
 export abstract class ValidationPipe implements PipeTransform<any> {
-  public constructor(private readonly check: CheckFunction) {}
+  public constructor(private readonly check: SyncCheckFunction) {}
 
   public async transform(value: any, { type }: ArgumentMetadata) {
     if (type === 'param') return value;
 
-    const result = await this.check(value);
-    if (isFailed(result)) {
+    const result = this.check(value);
+
+    if (result !== true) {
       this.fail(result);
     }
 

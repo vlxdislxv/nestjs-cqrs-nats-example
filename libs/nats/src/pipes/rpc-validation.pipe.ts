@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@dsa/common';
 import { Injectable } from '@nestjs/common';
-import { ValidationError } from 'fastest-validator';
+import type { ValidationError } from 'fastest-validator';
 import { BadRequestRpcException } from '../exceptions';
 
 @Injectable()

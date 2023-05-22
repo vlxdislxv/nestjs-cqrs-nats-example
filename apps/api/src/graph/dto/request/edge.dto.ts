@@ -1,4 +1,4 @@
-import { fv } from '@dsa/common';
+import { FvCompileSync } from '@dsa/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EdgeDto {
@@ -17,7 +17,7 @@ export class EdgeDto {
   destination: string;
 }
 
-export const EdgeDtoSchema = fv.compile<EdgeDto>({
+export const EdgeDtoSchema = FvCompileSync<EdgeDto>({
   source: 'string|alpha|lowercase|max:15',
   destination: 'string|alpha|lowercase|max:15',
 });

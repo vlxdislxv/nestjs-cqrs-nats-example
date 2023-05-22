@@ -1,11 +1,11 @@
-import { fv } from '@dsa/common';
+import { FvCompileSync } from '@dsa/common';
 
 export type GraphDto = {
   id: string;
   data: Record<string, string[]>;
 };
 
-export const GraphDtoSchema = fv.compile({
+export const GraphDtoSchema = FvCompileSync({
   id: 'string|alphanum|uppercase|length:26',
   data: {
     type: 'record',
@@ -14,7 +14,7 @@ export const GraphDtoSchema = fv.compile({
   },
 });
 
-export const GraphDtoArraySchema = fv.compile({
+export const GraphDtoArraySchema = FvCompileSync({
   $$root: true,
   type: 'array',
   items: {

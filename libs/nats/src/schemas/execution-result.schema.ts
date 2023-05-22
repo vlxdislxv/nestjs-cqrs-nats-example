@@ -1,6 +1,6 @@
-import { fv } from '@dsa/common';
+import { FvCompileSync } from '@dsa/common';
 
-export const ExecutionResultSchema = fv.compile({
+export const ExecutionResultSchema = FvCompileSync({
   $$root: true,
   type: 'boolean',
 });

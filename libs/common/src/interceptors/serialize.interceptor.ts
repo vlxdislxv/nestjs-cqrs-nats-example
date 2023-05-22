@@ -7,8 +7,8 @@ import {
   PlainLiteralObject,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import type { SyncCheckFunction } from 'fastest-validator';
 import { Observable, map } from 'rxjs';
-import { CheckFunction, isFailed } from '../validator';
 
 type ExecutionResult = PlainLiteralObject | Array<PlainLiteralObject>;
 
@@ -32,19 +32,19 @@ export class SerializeInterceptor implements NestInterceptor {
   }
 
   private serialize(context: ExecutionContext, res: ExecutionResult) {
-    const check = this.reflector.get<CheckFunction>(
+    const check = this.reflector.get<SyncCheckFunction>(
       RESPONSE_SCHEMA_KEY,
       context.getHandler(),
     );
 
     if (check) {
-      const errs = check(res);
+      const result = check(res);
 
-      if (isFailed(errs)) {
+      if (result !== true) {
         const cls = context.getClass().name;
         const handler = context.getHandler().name;
 
-        this.logger.warn(`Mismatch Schema: ${cls}.${handler}`, errs);
+        this.logger.warn(`Mismatch Schema: ${cls}.${handler}`, result);
       }
     }
 

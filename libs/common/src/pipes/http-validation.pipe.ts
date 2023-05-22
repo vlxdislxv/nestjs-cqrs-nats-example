@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ValidationError } from 'fastest-validator';
+import type { ValidationError } from 'fastest-validator';
 import { ValidationPipe } from './validation.pipe';
 
 @Injectable()

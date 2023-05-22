@@ -1,4 +1,7 @@
-import Validator from 'fastest-validator';
+import Validator, {
+  SyncCheckFunction,
+  ValidationSchema,
+} from 'fastest-validator';
 
 export const fv = new Validator({
   defaults: {
@@ -7,3 +10,12 @@ export const fv = new Validator({
     },
   },
 });
+
+export const FvCompileSync = <T = any>(
+  schema: ValidationSchema<T> | ValidationSchema<T>[],
+): SyncCheckFunction => {
+  return fv.compile({
+    ...schema,
+    $$async: false,
+  }) as SyncCheckFunction;
+};

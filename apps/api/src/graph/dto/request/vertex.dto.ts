@@ -1,4 +1,4 @@
-import { fv } from '@dsa/common';
+import { FvCompileSync } from '@dsa/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class VertexDto {
@@ -10,6 +10,6 @@ export class VertexDto {
   value: string;
 }
 
-export const VertexDtoSchema = fv.compile<VertexDto>({
+export const VertexDtoSchema = FvCompileSync<VertexDto>({
   value: 'string|alpha|lowercase|max:15',
 });
