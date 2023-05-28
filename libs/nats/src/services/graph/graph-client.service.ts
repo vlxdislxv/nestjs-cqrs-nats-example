@@ -3,6 +3,7 @@ import { ClientProxyAdapter } from '../../client';
 import {
   CreateGraphDto,
   EdgeDto,
+  FsDto,
   GraphDto,
   SearchResultDto,
   VertexDto,
@@ -21,18 +22,8 @@ export class GraphClientService {
     return this.client.request<string, GraphDto>(DsGraphRpcTopic.GET_ONE, id);
   }
 
-  public bfs(dto: EdgeDto) {
-    return this.client.request<EdgeDto, SearchResultDto>(
-      DsGraphRpcTopic.BFS,
-      dto,
-    );
-  }
-
-  public dfs(dto: EdgeDto) {
-    return this.client.request<EdgeDto, SearchResultDto>(
-      DsGraphRpcTopic.DFS,
-      dto,
-    );
+  public fs(dto: FsDto) {
+    return this.client.request<FsDto, SearchResultDto>(DsGraphRpcTopic.FS, dto);
   }
 
   public create(dto: CreateGraphDto) {

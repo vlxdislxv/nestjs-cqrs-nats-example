@@ -5,7 +5,7 @@ import {
   GraphClientModule,
   GraphClientService,
 } from '@dsa/nats/services/graph';
-import { GraphDto } from '@dsa/nats/services/graph/dto';
+import { FsEngineEnum, GraphDto } from '@dsa/nats/services/graph/dto';
 import { INestMicroservice } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RpcException, Transport } from '@nestjs/microservices';
@@ -119,26 +119,26 @@ describe('data-structure service (e2e)', () => {
     expect(testGraph.data['b']).toEqual(['c']);
   });
 
-  it('graph.bfs (QUERY)', async () => {
-    const result = await client.bfs({
+  it('graph.fs (QUERY)', async () => {
+    const res1 = await client.fs({
+      engine: FsEngineEnum.BREADTH,
       graphId: testGraph.id,
       source: 'a',
       destination: 'c',
     });
 
-    expect(result.path).toEqual(['a', 'b', 'c']);
-    expect(result.iterations).toEqual(2);
-  });
+    expect(res1.path).toEqual(['a', 'b', 'c']);
+    expect(res1.iterations).toEqual(2);
 
-  it('graph.dfs (QUERY)', async () => {
-    const result = await client.dfs({
+    const res2 = await client.fs({
+      engine: FsEngineEnum.DEPTH,
       graphId: testGraph.id,
       source: 'a',
       destination: 'c',
     });
 
-    expect(result.path).toEqual(['a', 'b', 'c']);
-    expect(result.iterations).toEqual(3);
+    expect(res2.path).toEqual(['a', 'b', 'c']);
+    expect(res2.iterations).toEqual(3);
   });
 
   it('graph.deleteEdge (COMMAND)', async () => {

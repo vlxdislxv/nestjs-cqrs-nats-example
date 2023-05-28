@@ -1,9 +1,9 @@
 {
   "name": "nestjs-cqrs-nats-example",
-  "version": "1.1.0",
+  "version": "2.0.0",
+  "packageManager": "yarn@3.5.1",
   "description": "NestJS CQRS + NATS microservice example.",
   "author": "vlxdislxv",
-  "private": false,
   "license": "MIT",
   "scripts": {
     "build": "nest build --webpack",
@@ -28,17 +28,17 @@
     "docker:clean": "docker-compose -f docker/docker-compose.yml -p dsa down --volumes"
   },
   "dependencies": {
-    "@fastify/static": "6.10.1",
-    "@nestjs/common": "9.4.1",
-    "@nestjs/core": "9.4.1",
+    "@fastify/static": "6.10.2",
+    "@nestjs/common": "9.4.2",
+    "@nestjs/core": "9.4.2",
     "@nestjs/cqrs": "9.0.4",
-    "@nestjs/microservices": "9.4.1",
-    "@nestjs/platform-fastify": "9.4.1",
+    "@nestjs/microservices": "9.4.2",
+    "@nestjs/platform-fastify": "9.4.2",
     "@nestjs/swagger": "6.3.0",
     "fastest-validator": "1.17.0",
     "knex": "2.4.2",
     "lodash": "4.17.21",
-    "nats": "2.13.1",
+    "nats": "2.14.0",
     "nkeys.js": "1.0.5",
     "pg": "8.11.0",
     "reflect-metadata": "0.1.13",
@@ -48,12 +48,12 @@
   "devDependencies": {
     "@nestjs/cli": "9.5.0",
     "@nestjs/schematics": "9.2.0",
-    "@nestjs/testing": "9.4.1",
+    "@nestjs/testing": "9.4.2",
     "@types/jest": "29.5.1",
-    "@types/lodash": "4.14.194",
-    "@types/node": "18.16.14",
-    "@typescript-eslint/eslint-plugin": "5.59.6",
-    "@typescript-eslint/parser": "5.59.6",
+    "@types/lodash": "4.14.195",
+    "@types/node": "18.16.16",
+    "@typescript-eslint/eslint-plugin": "5.59.7",
+    "@typescript-eslint/parser": "5.59.7",
     "eslint": "8.41.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
@@ -61,11 +61,11 @@
     "prettier": "2.8.8",
     "source-map-support": "0.5.21",
     "ts-jest": "29.1.0",
-    "ts-loader": "9.4.2",
+    "ts-loader": "9.4.3",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.0.4",
-    "webpack": "5.83.1"
+    "webpack": "5.84.1"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -1,3 +1,4 @@
+import { GraphData } from '@dsa/nats/services/graph/dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GraphDto {
@@ -13,5 +14,5 @@ export class GraphDto {
     description: 'Graph Representation.',
     example: { a: ['b', 'c'], b: [], c: [] },
   })
-  data: Record<string, string[]>;
+  data: GraphData;
 }

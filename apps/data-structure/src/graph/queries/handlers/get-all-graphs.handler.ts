@@ -1,13 +1,12 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GraphCQ } from '../../base';
+import { GraphService } from '../../graph.service';
 import { GetAllGraphsQuery } from '../impl';
 
 @QueryHandler(GetAllGraphsQuery)
-export class GetAllGraphsHandler
-  extends GraphCQ
-  implements IQueryHandler<GetAllGraphsQuery>
-{
+export class GetAllGraphsHandler implements IQueryHandler<GetAllGraphsQuery> {
+  public constructor(private readonly service: GraphService) {}
+
   public execute() {
-    return this.repo.findAll();
+    return this.service.getAll();
   }
 }

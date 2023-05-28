@@ -2,8 +2,7 @@ export enum DsGraphRpcTopic {
   GET_ALL = 'data-structure.graph.get-all',
   GET_ONE = 'data-structure.graph.get-one',
 
-  BFS = 'data-structure.graph.bfs',
-  DFS = 'data-structure.graph.dfs',
+  FS = 'data-structure.graph.fs',
 
   CREATE = 'data-structure.graph.create',
 

@@ -11,6 +11,8 @@ import {
   CreateGraphDtoSchema,
   EdgeDto,
   EdgeDtoSchema,
+  FsDto,
+  FsDtoSchema,
   GraphDtoArraySchema,
   GraphDtoSchema,
   SearchResultDtoSchema,
@@ -31,8 +33,7 @@ import {
   DeleteVertexCommand,
 } from './commands/impl';
 import {
-  BfsGraphQuery,
-  DfsGraphQuery,
+  FsGraphQuery,
   GetAllGraphsQuery,
   GetOneGraphQuery,
 } from './queries/impl';
@@ -58,19 +59,11 @@ export class GraphController {
     return this.queryBus.execute(new GetOneGraphQuery(id));
   }
 
-  @QueryMessagePattern(DsGraphRpcTopic.BFS, cqstype)
-  @RpcSchema(EdgeDtoSchema, SearchResultDtoSchema)
-  public bfs(@Payload() dto: EdgeDto) {
+  @QueryMessagePattern(DsGraphRpcTopic.FS, cqstype)
+  @RpcSchema(FsDtoSchema, SearchResultDtoSchema)
+  public fs(@Payload() dto: FsDto) {
     return this.queryBus.execute(
-      new BfsGraphQuery(dto.graphId, dto.source, dto.destination),
-    );
-  }
-
-  @QueryMessagePattern(DsGraphRpcTopic.DFS, cqstype)
-  @RpcSchema(EdgeDtoSchema, SearchResultDtoSchema)
-  public dfs(@Payload() dto: EdgeDto) {
-    return this.queryBus.execute(
-      new DfsGraphQuery(dto.graphId, dto.source, dto.destination),
+      new FsGraphQuery(dto.graphId, dto.source, dto.destination, dto.engine),
     );
   }
 

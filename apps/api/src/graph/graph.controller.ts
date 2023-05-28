@@ -27,6 +27,8 @@ import {
   CreateGraphDto,
   EdgeDto,
   EdgeDtoSchema,
+  FsDto,
+  FsDtoSchema,
   VertexDto,
   VertexDtoSchema,
 } from './dto/request';
@@ -51,21 +53,11 @@ export class GraphController {
     return this.service.getOne(id);
   }
 
-  @Get(':id/bfs')
+  @Get(':id/fs')
   @ApiOkResponse({ type: SearchResultDto })
-  @HttpSchema(EdgeDtoSchema, SearchResultDtoSchema)
-  public bfs(@Param('id', ParseULIDPipe) id: string, @Query() query: EdgeDto) {
-    return this.service.bfs({
-      ...query,
-      graphId: id,
-    });
-  }
-
-  @Get(':id/dfs')
-  @ApiOkResponse({ type: SearchResultDto })
-  @HttpSchema(EdgeDtoSchema, SearchResultDtoSchema)
-  public dfs(@Param('id', ParseULIDPipe) id: string, @Query() query: EdgeDto) {
-    return this.service.dfs({
+  @HttpSchema(FsDtoSchema, SearchResultDtoSchema)
+  public fs(@Param('id', ParseULIDPipe) id: string, @Query() query: FsDto) {
+    return this.service.fs({
       ...query,
       graphId: id,
     });

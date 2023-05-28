@@ -1,8 +1,9 @@
 import { FvCompileSync } from '@dsa/common';
+import { GraphData } from '../types';
 
 export type GraphDto = {
   id: string;
-  data: Record<string, string[]>;
+  data: GraphData;
 };
 
 export const GraphDtoSchema = FvCompileSync({
