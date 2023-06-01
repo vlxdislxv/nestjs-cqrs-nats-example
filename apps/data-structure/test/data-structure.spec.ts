@@ -1,11 +1,12 @@
 import { SerializeInterceptor } from '@dsa/common';
+import { FsEngineEnum } from '@dsa/core/graph';
 import { KnexModule } from '@dsa/knex';
 import { ClientProxyAdapter, NatsClientModule } from '@dsa/nats';
 import {
   GraphClientModule,
   GraphClientService,
 } from '@dsa/nats/services/graph';
-import { FsEngineEnum, GraphDto } from '@dsa/nats/services/graph/dto';
+import { GraphDto } from '@dsa/nats/services/graph/dto';
 import { INestMicroservice } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RpcException, Transport } from '@nestjs/microservices';

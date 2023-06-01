@@ -1,5 +1,5 @@
 import { FvCompileSync } from '@dsa/common';
-import { GraphData } from '../types';
+import { GraphData } from '@dsa/core/graph';
 
 export type GraphDto = {
   id: string;

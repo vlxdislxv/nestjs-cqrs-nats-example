@@ -7,6 +7,6 @@ export class DeleteGraphHandler implements ICommandHandler<DeleteGraphCommand> {
   public constructor(private readonly service: GraphService) {}
 
   public execute(command: DeleteGraphCommand) {
-    return this.service.delete(command);
+    return this.service.delete(command.id);
   }
 }

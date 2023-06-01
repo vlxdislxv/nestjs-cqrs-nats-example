@@ -1,5 +1,5 @@
 import { FvCompileSync } from '@dsa/common';
-import { FsEngineEnum } from '../enums';
+import { FsEngineEnum } from '@dsa/core/graph';
 
 export type FsDto = {
   graphId: string;

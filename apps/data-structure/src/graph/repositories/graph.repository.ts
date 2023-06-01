@@ -1,6 +1,6 @@
 import { KnexRepository } from '@dsa/knex';
 import type { Knex } from 'knex';
-import { GraphEntity } from '../types';
+import { GraphEntity } from '../core/types';
 
 export class GraphRepository extends KnexRepository {
   protected readonly table = 'graphs';

@@ -36,6 +36,12 @@
       ],
       "@dsa/knex/*": [
         "libs/knex/src/*"
+      ],
+      "@dsa/core": [
+        "libs/core/src"
+      ],
+      "@dsa/core/*": [
+        "libs/core/src/*"
       ]
     }
   }

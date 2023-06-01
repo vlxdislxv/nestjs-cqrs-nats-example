@@ -7,6 +7,6 @@ export class CreateGraphHandler implements ICommandHandler<CreateGraphCommand> {
   public constructor(private readonly service: GraphService) {}
 
   public execute(command: CreateGraphCommand) {
-    return this.service.create(command);
+    return this.service.create(command.nodes);
   }
 }

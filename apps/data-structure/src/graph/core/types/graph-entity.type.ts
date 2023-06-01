@@ -1,4 +1,4 @@
-import { GraphData } from '@dsa/nats/services/graph/dto';
+import { GraphData } from '@dsa/core/graph';
 
 export type GraphEntity = {
   id: string;

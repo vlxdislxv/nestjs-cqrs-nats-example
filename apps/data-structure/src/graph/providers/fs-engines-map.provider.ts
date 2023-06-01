@@ -1,6 +1,6 @@
-import { FsEngineEnum } from '@dsa/nats/services/graph/dto';
+import { FsEngineEnum } from '@dsa/core/graph';
 import { ValueProvider } from '@nestjs/common';
-import { BfsEngine, DfsEngine, FsEngine } from '../core';
+import { BfsEngine, DfsEngine, FsEngine } from '../core/fs';
 
 export const FsEnginesMapProvider: ValueProvider = {
   provide: 'FsEnginesMap',

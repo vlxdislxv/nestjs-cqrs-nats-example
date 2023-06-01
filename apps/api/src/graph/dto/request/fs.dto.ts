@@ -1,5 +1,5 @@
 import { FvCompileSync } from '@dsa/common';
-import { FsEngineEnum } from '@dsa/nats/services/graph/dto';
+import { FsEngineEnum } from '@dsa/core/graph';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class FsDto {

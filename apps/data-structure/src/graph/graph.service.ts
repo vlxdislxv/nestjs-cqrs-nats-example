@@ -1,16 +1,14 @@
+import { FsEngineEnum, GraphData } from '@dsa/core/graph';
 import { BadRequestRpcException, NotFoundRpcException } from '@dsa/nats';
-import { FsEngineEnum, GraphData } from '@dsa/nats/services/graph/dto';
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  AddEdgeCommand,
-  AddVertexCommand,
-  CreateGraphCommand,
-  DeleteEdgeCommand,
-  DeleteGraphCommand,
-  DeleteVertexCommand,
-} from './commands/impl';
-import { FsEngine } from './core';
-import { FsGraphQuery } from './queries/impl';
+  AddEdgeSvcDto,
+  AddVertexSvcDto,
+  DeleteEdgeSvcDto,
+  DeleteVertexSvcDto,
+  FsGraphSvcDto,
+} from './core/dto';
+import { FsEngine } from './core/fs';
 import { GraphRepository } from './repositories';
 
 @Injectable()
@@ -25,8 +23,8 @@ export class GraphService {
     return this.repo.findAll();
   }
 
-  public create(command: CreateGraphCommand) {
-    const data = command.nodes.reduce(
+  public create(nodes: string[]) {
+    const data = nodes.reduce(
       (data, node) => ({
         ...data,
         [node]: [] as string[],
@@ -37,15 +35,15 @@ export class GraphService {
     return this.repo.store(data);
   }
 
-  public async fs(query: FsGraphQuery) {
-    const { data } = await this.getById(query.graphId);
+  public async fs(dto: FsGraphSvcDto) {
+    const { data } = await this.getById(dto.graphId);
 
-    const fse = this.fseMap.get(query.engine);
+    const fse = this.fseMap.get(dto.engine);
     if (!fse) throw new BadRequestRpcException('Unsupported Engine.');
 
     return fse.run({
-      source: query.source,
-      destination: query.destination,
+      source: dto.source,
+      destination: dto.destination,
       graph: data,
     });
   }
@@ -56,14 +54,14 @@ export class GraphService {
     return graph;
   }
 
-  public async addEdge(command: AddEdgeCommand) {
-    const { graph, tx } = await this.getByIdTx(command.graphId);
-    const srcNodes = this.pushVertex(graph.data, command.source);
+  public async addEdge(dto: AddEdgeSvcDto) {
+    const { graph, tx } = await this.getByIdTx(dto.graphId);
+    const srcNodes = this.pushVertex(graph.data, dto.source);
 
-    this.pushVertex(graph.data, command.destination);
+    this.pushVertex(graph.data, dto.destination);
 
-    if (srcNodes.indexOf(command.destination) === -1) {
-      srcNodes.push(command.destination);
+    if (srcNodes.indexOf(dto.destination) === -1) {
+      srcNodes.push(dto.destination);
     }
 
     await this.repo.updateTx(tx, graph);
@@ -72,10 +70,10 @@ export class GraphService {
     return graph;
   }
 
-  public async addVertex(command: AddVertexCommand) {
-    const { graph, tx } = await this.getByIdTx(command.graphId);
+  public async addVertex(dto: AddVertexSvcDto) {
+    const { graph, tx } = await this.getByIdTx(dto.graphId);
 
-    this.pushVertex(graph.data, command.value);
+    this.pushVertex(graph.data, dto.value);
 
     await this.repo.updateTx(tx, graph);
     await tx.commit();
@@ -83,16 +81,16 @@ export class GraphService {
     return graph;
   }
 
-  public async deleteEdge(command: DeleteEdgeCommand) {
-    const { graph, tx } = await this.getByIdTx(command.graphId);
-    const srcNodes = graph.data[command.source];
+  public async deleteEdge(dto: DeleteEdgeSvcDto) {
+    const { graph, tx } = await this.getByIdTx(dto.graphId);
+    const srcNodes = graph.data[dto.source];
 
     if (!srcNodes) {
       await tx.rollback();
       return graph;
     }
 
-    const index = srcNodes.indexOf(command.destination);
+    const index = srcNodes.indexOf(dto.destination);
 
     if (index === -1) {
       await tx.rollback();
@@ -107,14 +105,14 @@ export class GraphService {
     return graph;
   }
 
-  public async deleteVertex(command: DeleteVertexCommand) {
-    const { graph, tx } = await this.getByIdTx(command.graphId);
+  public async deleteVertex(dto: DeleteVertexSvcDto) {
+    const { graph, tx } = await this.getByIdTx(dto.graphId);
 
-    if (graph.data[command.value]) {
-      delete graph.data[command.value];
+    if (graph.data[dto.value]) {
+      delete graph.data[dto.value];
 
       for (const nodes of Object.values(graph.data)) {
-        const index = nodes.indexOf(command.value);
+        const index = nodes.indexOf(dto.value);
 
         if (index !== -1) {
           nodes.splice(index, 1);
@@ -130,8 +128,8 @@ export class GraphService {
     return graph;
   }
 
-  public async delete(command: DeleteGraphCommand) {
-    const raws = await this.repo.delete(command.id);
+  public async delete(id: string) {
+    const raws = await this.repo.delete(id);
     if (!raws) throw new NotFoundRpcException();
     return true;
   }
