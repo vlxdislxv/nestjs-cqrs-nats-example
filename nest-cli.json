@@ -3,31 +3,13 @@
   "collection": "@nestjs/schematics",
   "monorepo": true,
   "projects": {
-    "api": {
-      "type": "application",
-      "root": "apps/api",
-      "entryFile": "main",
-      "sourceRoot": "apps/api/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/api/tsconfig.app.json"
-      }
-    },
-    "data-structure": {
-      "type": "application",
-      "root": "apps/data-structure",
-      "entryFile": "main",
-      "sourceRoot": "apps/data-structure/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/data-structure/tsconfig.app.json"
-      }
-    },
-    "core": {
+    "svc": {
       "type": "library",
-      "root": "libs/core",
+      "root": "libs/svc",
       "entryFile": "index",
-      "sourceRoot": "libs/core/src",
+      "sourceRoot": "libs/svc/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/core/tsconfig.lib.json"
+        "tsConfigPath": "libs/svc/tsconfig.lib.json"
       }
     },
     "common": {
@@ -55,6 +37,24 @@
       "sourceRoot": "libs/knex/src",
       "compilerOptions": {
         "tsConfigPath": "libs/knex/tsconfig.lib.json"
+      }
+    },
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
+    "data-structure": {
+      "type": "application",
+      "root": "apps/data-structure",
+      "entryFile": "main",
+      "sourceRoot": "apps/data-structure/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/data-structure/tsconfig.app.json"
       }
     }
   },

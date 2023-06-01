@@ -1,6 +1,6 @@
 {
   "name": "nestjs-cqrs-nats-example",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "packageManager": "yarn@3.5.1",
   "description": "NestJS CQRS + NATS microservice example.",
   "author": "vlxdislxv",
@@ -92,7 +92,7 @@
       "^@dsa/validator(|/.*)$": "<rootDir>/libs/validator/src/$1",
       "^@dsa/nats(|/.*)$": "<rootDir>/libs/nats/src/$1",
       "^@dsa/knex(|/.*)$": "<rootDir>/libs/knex/src/$1",
-      "^@dsa/core(|/.*)$": "<rootDir>/libs/core/src/$1"
+      "^@dsa/svc(|/.*)$": "<rootDir>/libs/svc/src/$1"
     }
   }
 }

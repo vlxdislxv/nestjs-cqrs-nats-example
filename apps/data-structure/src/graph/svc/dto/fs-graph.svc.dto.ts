@@ -1,4 +1,4 @@
-import { FsEngineEnum } from '@dsa/core/graph';
+import { FsEngineEnum } from '@dsa/svc/graph';
 
 export type FsGraphSvcDto = {
   graphId: string;

@@ -1,15 +1,15 @@
-import { FsEngineEnum, GraphData } from '@dsa/core/graph';
 import { BadRequestRpcException, NotFoundRpcException } from '@dsa/nats';
+import { FsEngineEnum, GraphData } from '@dsa/svc/graph';
 import { Inject, Injectable } from '@nestjs/common';
+import { GraphRepository } from './repositories';
 import {
   AddEdgeSvcDto,
   AddVertexSvcDto,
   DeleteEdgeSvcDto,
   DeleteVertexSvcDto,
   FsGraphSvcDto,
-} from './core/dto';
-import { FsEngine } from './core/fs';
-import { GraphRepository } from './repositories';
+} from './svc/dto';
+import { FsEngine } from './svc/fs';
 
 @Injectable()
 export class GraphService {

@@ -37,11 +37,11 @@
       "@dsa/knex/*": [
         "libs/knex/src/*"
       ],
-      "@dsa/core": [
-        "libs/core/src"
+      "@dsa/svc": [
+        "libs/svc/src"
       ],
-      "@dsa/core/*": [
-        "libs/core/src/*"
+      "@dsa/svc/*": [
+        "libs/svc/src/*"
       ]
     }
   }

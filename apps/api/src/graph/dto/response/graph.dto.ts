@@ -1,4 +1,4 @@
-import { GraphData } from '@dsa/core/graph';
+import { GraphData } from '@dsa/svc/graph';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GraphDto {
