@@ -1,4 +1,4 @@
-import { BadRequestRpcException, NotFoundRpcException } from '@dsa/nats';
+import { BadRequestSvcException, NotFoundSvcException } from '@dsa/svc';
 import { FsEngineEnum, GraphData } from '@dsa/svc/graph';
 import { Inject, Injectable } from '@nestjs/common';
 import { GraphRepository } from './repositories';
@@ -39,7 +39,7 @@ export class GraphService {
     const { data } = await this.getById(dto.graphId);
 
     const fse = this.fseMap.get(dto.engine);
-    if (!fse) throw new BadRequestRpcException('Unsupported Engine.');
+    if (!fse) throw new BadRequestSvcException('Unsupported Engine.');
 
     return fse.run({
       source: dto.source,
@@ -50,7 +50,7 @@ export class GraphService {
 
   public async getById(id: string) {
     const graph = await this.repo.findOneById(id);
-    if (!graph) throw new NotFoundRpcException();
+    if (!graph) throw new NotFoundSvcException();
     return graph;
   }
 
@@ -130,7 +130,7 @@ export class GraphService {
 
   public async delete(id: string) {
     const raws = await this.repo.delete(id);
-    if (!raws) throw new NotFoundRpcException();
+    if (!raws) throw new NotFoundSvcException();
     return true;
   }
 
@@ -139,7 +139,7 @@ export class GraphService {
 
     if (!graph) {
       await tx.rollback();
-      throw new NotFoundRpcException();
+      throw new NotFoundSvcException();
     }
 
     return { graph, tx };

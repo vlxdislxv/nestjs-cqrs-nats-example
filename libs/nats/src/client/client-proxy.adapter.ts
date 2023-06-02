@@ -1,4 +1,5 @@
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { SvcException } from '@dsa/svc';
+import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 
 export class ClientProxyAdapter {
@@ -12,8 +13,9 @@ export class ClientProxyAdapter {
       return await firstValueFrom(this.client.send(topic, data));
     } catch (err) {
       const scode = err['statusCode'];
+
       if (scode >= 400 && scode < 500) {
-        throw new RpcException(err);
+        throw new SvcException(err);
       }
 
       err.message += ` | RpcTopic:${topic}`;

@@ -1,4 +1,4 @@
-import { RpcExceptionFilter } from '@dsa/nats';
+import { SvcExceptionFilter } from '@dsa/svc';
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
@@ -10,7 +10,7 @@ function setupDoc(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('DSA')
     .setDescription('The DSA API.')
-    .setVersion('1.0')
+    .setVersion('2.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -25,7 +25,7 @@ async function bootstrap() {
   if (swagger) setupDoc(app);
 
   await app
-    .useGlobalFilters(new RpcExceptionFilter())
+    .useGlobalFilters(new SvcExceptionFilter())
     .listen(http.port, http.host);
 }
 

@@ -1,4 +1,4 @@
-import { RpcExceptionFilter } from '@dsa/nats';
+import { SvcExceptionFilter } from '@dsa/svc';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { nkeyAuthenticator } from 'nats';
@@ -16,6 +16,6 @@ async function bootstrap() {
     },
   });
 
-  await app.useGlobalFilters(new RpcExceptionFilter()).listen();
+  await app.useGlobalFilters(new SvcExceptionFilter()).listen();
 }
 bootstrap();

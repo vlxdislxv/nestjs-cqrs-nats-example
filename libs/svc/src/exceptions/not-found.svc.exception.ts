@@ -1,6 +1,6 @@
-import { RpcException } from '@nestjs/microservices';
+import { SvcException } from './svc.exception';
 
-export class NotFoundRpcException extends RpcException {
+export class NotFoundSvcException extends SvcException {
   public constructor(message = 'Entity not Found.') {
     super({
       statusCode: 404,

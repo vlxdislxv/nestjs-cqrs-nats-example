@@ -1,7 +1,6 @@
-import { RESPONSE_SCHEMA_KEY } from '@dsa/common';
+import { RESPONSE_SCHEMA_KEY, RpcValidationPipe } from '@dsa/common';
 import { SetMetadata, UsePipes, applyDecorators } from '@nestjs/common';
 import type { SyncCheckFunction } from 'fastest-validator';
-import { RpcValidationPipe } from '../pipes';
 
 export function RpcSchema(
   request: SyncCheckFunction,

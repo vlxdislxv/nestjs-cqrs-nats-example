@@ -6,10 +6,11 @@ import {
   GraphClientService,
 } from '@dsa/nats/services/graph';
 import { GraphDto } from '@dsa/nats/services/graph/dto';
+import { SvcException, SvcExceptionFilter } from '@dsa/svc';
 import { FsEngineEnum } from '@dsa/svc/graph';
 import { INestMicroservice } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { RpcException, Transport } from '@nestjs/microservices';
+import { Transport } from '@nestjs/microservices';
 import { Test } from '@nestjs/testing';
 import { nkeyAuthenticator } from 'nats';
 import { appConfig } from '../src/config';
@@ -17,7 +18,7 @@ import { GraphModule } from '../src/graph';
 
 jest.setTimeout(30000);
 
-describe('data-structure service (e2e)', () => {
+describe('data-structure service', () => {
   let app: INestMicroservice;
   let client: GraphClientService;
 
@@ -51,7 +52,7 @@ describe('data-structure service (e2e)', () => {
 
     client = moduleRef.get<GraphClientService>(GraphClientService);
 
-    await app.listen();
+    await app.useGlobalFilters(new SvcExceptionFilter()).listen();
     await app.get<ClientProxyAdapter>(ClientProxyAdapter).connect();
   });
 
@@ -77,7 +78,7 @@ describe('data-structure service (e2e)', () => {
     const graph = await client.getOne(testGraph.id);
     expect(graph).toEqual(testGraph);
 
-    const notFound: RpcException = await client
+    const notFound: SvcException = await client
       .getOne('00000000000000000000000000')
       .catch((err) => err);
 

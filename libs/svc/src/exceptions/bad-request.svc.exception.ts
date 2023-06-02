@@ -1,6 +1,6 @@
-import { RpcException } from '@nestjs/microservices';
+import { SvcException } from './svc.exception';
 
-export class BadRequestRpcException extends RpcException {
+export class BadRequestSvcException extends SvcException {
   public constructor(message: any) {
     super({
       statusCode: 400,

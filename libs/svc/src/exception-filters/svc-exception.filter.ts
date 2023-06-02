@@ -1,9 +1,9 @@
 import { ArgumentsHost, Catch, HttpException } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
+import { SvcException } from '../exceptions';
 
-@Catch(RpcException)
-export class RpcExceptionFilter {
-  public catch(exception: RpcException, host: ArgumentsHost) {
+@Catch(SvcException)
+export class SvcExceptionFilter {
+  public catch(exception: SvcException, host: ArgumentsHost) {
     const error = exception.getError();
 
     if (host.getType() === 'http') {
